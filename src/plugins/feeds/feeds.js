@@ -453,10 +453,11 @@ $document.on( "ajax-fetched.wb data-ready.wb-feeds", selector + " " + feedLinkSe
 		switch ( event.type ) {
 		case "ajax-fetched":
 			response = event.fetch.response;
-			if ( !response.items ) {
+			if ( !response.items && response.documentElement ) {
 				limit = getLimit( $emlRss[ Object.keys( $emlRss )[ 0 ] ] );
 				data = corsEntry( response, limit );
 			} else {
+				data = response.items;
 				if ( response.query ) {
 					results = response.query.results;
 					if ( !results ) {
@@ -467,8 +468,6 @@ $document.on( "ajax-fetched.wb data-ready.wb-feeds", selector + " " + feedLinkSe
 					} else {
 						data = [];
 					}
-				} else {
-					data = response.items;
 				}
 			}
 			break;
